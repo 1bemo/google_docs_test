@@ -1,26 +1,27 @@
 /// FeedbackForm это класс с данными
 class FeedbackForm {
   String name;
-  String age;
-  String phone;
-  String someText;
+  String unit;
+  String composition;
+  String temperature;
 
-  FeedbackForm(this.name, this.age, this.phone, this.someText);
+  FeedbackForm(this.name, this.unit, this.composition, this.temperature);
 
+  //метод фромДжейсон, вовращает объект, класса ФидбэкФорм с данными из джейсон запроса
   factory FeedbackForm.fromJson(dynamic json) {
     return FeedbackForm(
         "${json['name']}",
-        "${json['age']}",
-        "${json['phone']}",
-        "${json['someText']}"
+        "${json['unit']}",
+        "${json['composition']}",
+        "${json['temperature']}"
     );
   }
 
-  // Метод для получения параметров
+  // Структура (мапа) раскидывает стринг переменные по полям ключ-значение
   Map toJson() => {
     'name': name,
-    'age': age,
-    'phone': phone,
-    'someText': someText
+    'unit': unit,
+    'composition': composition,
+    'temperature': temperature
   };
 }

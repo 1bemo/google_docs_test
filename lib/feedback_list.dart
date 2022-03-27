@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'controller/form_controller.dart';
+import 'main.dart';
 
 class FeedbackListScreen extends StatelessWidget {
   const FeedbackListScreen({Key? key}) : super(key: key);
@@ -27,8 +28,6 @@ class FeedbackListPage extends StatefulWidget {
 class _FeedbackListPageState extends State<FeedbackListPage> {
   List feedbackItems = [];
 
-  // Method to Submit Feedback and save it in Google Sheets
-
   @override
   void initState() {
     super.initState();
@@ -36,6 +35,7 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
     FormController().getFeedbackList().then((feedbackItems) {
       setState(() {
         this.feedbackItems = feedbackItems;
+        this.feedbackItems.removeLast();
       });
     });
   }
@@ -44,6 +44,15 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_outlined),
+          onPressed: (){
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MyApp())
+            );
+          },
+        ),
         title: Text(widget.title!),
       ),
       body: ListView.builder(

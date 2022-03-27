@@ -1,7 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:advance_notification/advance_notification.dart';  //другой снекбар
+
+//дргуие файлы
 import 'package:google_docs_test/feedback_list.dart';
 import 'controller/form_controller.dart';
+import 'food_list.dart';
 import 'model/form.dart';
 
 void main() => runApp(const MyApp());
@@ -16,15 +19,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      //пробрасываем в виджет текст, ктр будет использоваться в АппБаре
       home: const MyHomePage(title: 'Flutter Google Sheet Demo'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, this.title}) : super(key: key);
+  const MyHomePage({Key? key,required this.title}) : super(key: key);
 
-  final String? title;
+  final String title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -32,71 +36,60 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a `GlobalKey<FormState>`,
-  // not a GlobalKey<MyCustomFormState>.
+  /*
+  //вкл/выкл кнопки отправки данных
+  final bool _isButtonEnable = false;
+
+  //создатся глобальные уникальные ключи для ФормСтейт и СкафолдСтейт
+  //формКей дял валидации
+  //скафолдКей для снекбара
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  // TextField Controllers
+
+  // ТекстЕдитингКонтроллеры для простоты управления текстовыми полями
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController phoneNoController = TextEditingController();
   TextEditingController someTextController = TextEditingController();
 
-  // Method to Submit Feedback and save it in Google Sheets
+
+  // ф-я отправляет данные и сохраняет в гугл таблице
   void _submitForm() {
-    // Validate returns true if the form is valid, or false
-    // otherwise.
+    // валидация возвращает истину, если форма валидна. Иначе ложь
     if (_formKey.currentState!.validate()) {
-      // If the form is valid, proceed.
+      //объект, класса фидбекФорм с заполнением его реквизитов из контроллеров
       FeedbackForm feedbackForm = FeedbackForm(
           nameController.text,
           ageController.text,
           phoneNoController.text,
           someTextController.text);
 
+      //объект класса формКонтроллер
       FormController formController = FormController();
 
-      _showSnackbar("Submitting Feedback");
+      //пишем ,что отправляем
+      const AdvanceSnackBar(message: 'Отправка дынных').show(context);
 
-      // Submit 'feedbackForm' and save it in Google Sheets.
-      formController.submitForm(feedbackForm, (String response) {
-        if (kDebugMode) {
-          print("Response: $response");
-        }
-        if (response == FormController.statusSuccess) {
-          // Feedback is saved succesfully in Google Sheets.
-          _showSnackbar("Feedback Submitted");
-        } else {
-          // Error Occurred while saving data in Google Sheets.
-          _showSnackbar("Error Occurred!");
-        }
-      });
+      // отправка и сохранение в гугл таблицу
+      formController.submitForm(feedbackForm, (_) {});
     }
   }
-
-  // Method to show snackbar with 'message'.
-  _showSnackbar(String message) {
-    final snackBar = SnackBar(content: Text(message));
-    _scaffoldKey.currentState!.showSnackBar(snackBar);
-  }
+   */
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      //key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text(widget.title!),
+        title: Text(widget.title),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Form(
+            /*Form(
                 key: _formKey,
                 child:
                 Padding(padding: const EdgeInsets.all(16),
@@ -160,11 +153,16 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ElevatedButton(
               style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.blue)
+                backgroundColor: MaterialStateProperty.all(
+                    _isButtonEnable ? Colors.blue: Colors.black12
+                )
               ),
-              onPressed:_submitForm,
-              child: const Text('Submit Feedback',style: TextStyle(color: Colors.white),),
-            ),
+              onPressed: _isButtonEnable ? _submitForm : (){},
+              child: Text(
+                _isButtonEnable ? 'Отправить данные' : 'Отправка отключена',
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),*/
             ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(Colors.lightBlueAccent)
@@ -172,10 +170,10 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const FeedbackListScreen())
+                  MaterialPageRoute(builder: (context) => const FoodListScreen())
                 );
               },
-              child: const Text('View Feedback',style: TextStyle(color: Colors.black),)
+              child: const Text('Загрузить данные',style: TextStyle(color: Colors.black),)
             )
           ],
         ),
