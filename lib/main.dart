@@ -87,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             /*Form(
                 key: _formKey,
@@ -165,6 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),*/
             ElevatedButton(
               style: ButtonStyle(
+                padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
                 backgroundColor: MaterialStateProperty.all(Colors.lightBlueAccent)
               ),
               onPressed: (){

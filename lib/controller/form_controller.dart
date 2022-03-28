@@ -1,5 +1,4 @@
 import 'dart:convert' as convert; //для конвертирования джейсон строки и работы с ней
-import 'package:flutter/foundation.dart'; //для отладки
 import 'package:http/http.dart' as http;  //для использования джейсон
 
 //прочие файлы
@@ -12,6 +11,7 @@ class FormController {
   // статическая неизменяемая строковая переменная юрл - это ссылка нашего макроса
   static const String url = "https://script.google.com/macros/s/AKfycbyPD9Z2dQbpkrKIk48nWCgTK8Q6HQkotWGTMjtwTDEdLjYZBss/exec";
 
+  /*
   ///--------------------------ТУТ НАДО ТУПО ВСЕ ЗАПОМНИТЬ
   // Асинхронная функция, которая сохраняет данные, анализирует параметры
   // и отправляет запрос HTTP GET на url. При успешном ответе вызывается [обратный вызов].
@@ -42,7 +42,7 @@ class FormController {
       if (kDebugMode) print(e);
     }
   }
-
+*/
   //асинхр. ф-я, ктр возвращает список с гугл таблицы
   Future<List<FeedbackForm>> getFeedbackList() async {
     return await http.get(Uri.parse(url)).then((response) {
