@@ -9,7 +9,7 @@ import '../model/form.dart';
 class FormController {
 
   // статическая неизменяемая строковая переменная юрл - это ссылка нашего макроса
-  static const String url = "https://script.google.com/macros/s/AKfycbyPD9Z2dQbpkrKIk48nWCgTK8Q6HQkotWGTMjtwTDEdLjYZBss/exec";
+  static const String url = "https://script.google.com/macros/s/AKfycbz_9ET-xOK12q8kz58OejGrFLKMoecEb_0LxYfSS39KQ2s6glw/exec";
 
   /*
   ///--------------------------ТУТ НАДО ТУПО ВСЕ ЗАПОМНИТЬ
@@ -44,7 +44,7 @@ class FormController {
   }
 */
   //асинхр. ф-я, ктр возвращает список с гугл таблицы
-  Future<List<FeedbackForm>> getFeedbackList() async {
+  Future<List<FeedbackForm>> getFoodList() async {
     return await http.get(Uri.parse(url)).then((response) {
       var jsonFeedback = convert.jsonDecode(response.body) as List;
       return jsonFeedback.map((json) => FeedbackForm.fromJson(json)).toList();

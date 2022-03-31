@@ -32,17 +32,18 @@ class _FoodListPageState extends State<FoodListPage> {
   void initState() {
     super.initState();
 
-    FormController().getFeedbackList().then((foodItemsFromSheet) {
+    FormController().getFoodList().then((foodItemsFromSheet) {
       setState(() {
         foodItems = foodItemsFromSheet;
-        foodItems[23].image = foodItems[23].image.toString().replaceAll('=IMAGE("', '');
-        foodItems[23].image = foodItems[23].image.toString().replaceAll('")', '');
-
-        for(int i = 0; i<8; i++) {
-          foodItems.removeLast();
-        }
+        foodItems = formatImageLink(foodItems);
       });
     });
+  }
+
+  List formatImageLink (List fdItem) {
+    fdItem[23].image = fdItem[23].image.toString().replaceAll('=IMAGE("', '');
+    fdItem[23].image = fdItem[23].image.toString().replaceAll('")', '');
+    return fdItem;
   }
 
   @override
@@ -101,10 +102,9 @@ class _FoodListPageState extends State<FoodListPage> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Image.network(
-                                    foodItems[i].image,
-                                    width: 150,
-                                  ),
+                                  foodItems[i].image == ''
+                                      ? Image.asset('lib/assets/no_image.png',width: 150,)
+                                      : Image.network(foodItems[i].image, width: 150,),
                                 ],
                               ),
                               const Padding(padding: EdgeInsets.only(top: 10)),

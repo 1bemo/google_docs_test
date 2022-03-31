@@ -28,7 +28,7 @@ class FeedbackListPage extends StatefulWidget {
 class _FeedbackListPageState extends State<FeedbackListPage> {
   List feedbackItems = [];
 
-  @override
+  /*@override
   void initState() {
     super.initState();
 
@@ -38,7 +38,7 @@ class _FeedbackListPageState extends State<FeedbackListPage> {
         this.feedbackItems.removeLast();
       });
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
