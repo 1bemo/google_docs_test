@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:advance_notification/advance_notification.dart';  //другой снекбар
+//import 'package:advance_notification/advance_notification.dart';  //другой снекбар
+import 'package:google_docs_test/category.dart';
 
+/*
 //дргуие файлы
 import 'package:google_docs_test/feedback_list.dart';
 import 'controller/form_controller.dart';
 import 'food_list.dart';
 import 'model/form.dart';
+*/
 
 void main() => runApp(const MyApp());
 
@@ -171,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const FoodListScreen())
+                  MaterialPageRoute(builder: (context) => const Category())
                 );
               },
               child: const Text('Загрузить данные',style: TextStyle(color: Colors.black),)

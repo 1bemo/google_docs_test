@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'controller/form_controller.dart';
-import 'main.dart';
+import 'package:google_docs_test/category.dart';
+import 'package:google_docs_test/food_controller.dart';
 
+// ignore: must_be_immutable
 class FoodListScreen extends StatelessWidget {
   const FoodListScreen({Key? key}) : super(key: key);
 
@@ -16,6 +17,7 @@ class FoodListScreen extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class FoodListPage extends StatefulWidget {
   const FoodListPage({Key? key}) : super(key: key);
 
@@ -32,7 +34,7 @@ class _FoodListPageState extends State<FoodListPage> {
   void initState() {
     super.initState();
 
-    FormController().getFoodList().then((foodItemsFromSheet) {
+    FoodController().getFoodList().then((foodItemsFromSheet) {
       setState(() {
         foodItems = foodItemsFromSheet;
         foodItems = formatImageLink(foodItems);
@@ -51,13 +53,13 @@ class _FoodListPageState extends State<FoodListPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: const Text('Food Items'),
+        title: const Text('some'),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_rounded),
+          icon: const Icon(Icons.arrow_left),
           onPressed: (){
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const MyApp())
+              MaterialPageRoute(builder: (context) => const Category())
             );
           },
         ),
