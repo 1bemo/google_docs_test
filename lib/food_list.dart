@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_docs_test/category.dart';
 import 'package:google_docs_test/food_controller.dart';
+import 'package:google_docs_test/loading_screen.dart';
 
 // ignore: must_be_immutable
 class FoodListScreen extends StatelessWidget {
@@ -10,7 +11,11 @@ class FoodListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        splashColor: Colors.green.withOpacity(0.7),
         primaryColor: Colors.green[700],
+        highlightColor: Colors.green[900],
+        //цвет подсказки конца списка
+        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.green),
       ),
       home: const FoodListPage(),
     );
@@ -34,10 +39,10 @@ class _FoodListPageState extends State<FoodListPage> {
   void initState() {
     super.initState();
 
-    FoodController().getFoodList().then((foodItemsFromSheet) {
+    FoodController().getFoodList(nameFoodList).then((foodItemsFromSheet) {
       setState(() {
         foodItems = foodItemsFromSheet;
-        foodItems = formatImageLink(foodItems);
+        //foodItems = formatImageLink(foodItems);
       });
     });
   }
@@ -53,7 +58,7 @@ class _FoodListPageState extends State<FoodListPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: const Text('some'),
+        title: Text(nameFoodList),
         leading: IconButton(
           icon: const Icon(Icons.arrow_left),
           onPressed: (){
@@ -64,7 +69,8 @@ class _FoodListPageState extends State<FoodListPage> {
           },
         ),
       ),
-      body: Scrollbar(
+      body: foodItems.isEmpty ? const LoadingScreen() :
+      Scrollbar(
         radius: const Radius.circular(5),
         child: ListView.builder(
           itemCount: foodItems.length,
@@ -73,7 +79,15 @@ class _FoodListPageState extends State<FoodListPage> {
               margin: const EdgeInsets.symmetric(vertical: 5,horizontal: 10),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
-                color: Colors.white,
+                //color: Colors.white,
+                gradient: const LinearGradient(
+                    colors: [
+                      Colors.white,
+                      Colors.white,
+                      Color(0xffeaffdb),
+                      //Colors.white,
+                    ]
+                ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.5),
@@ -90,9 +104,9 @@ class _FoodListPageState extends State<FoodListPage> {
                   showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: Text(
-                          'Подробно $i',
-                          style: const TextStyle(fontSize: 16,fontWeight: FontWeight.normal),
+                        title: const Text(
+                          'Подробно',
+                          style: TextStyle(fontSize: 16,fontWeight: FontWeight.normal),
                         ),
                         content: SingleChildScrollView(
                           child: Column(
@@ -131,8 +145,9 @@ class _FoodListPageState extends State<FoodListPage> {
                               const Text('Нормативный документ:',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
                               Text(foodItems[i].normativeDocument.trim(),style: const TextStyle(fontSize: 10)),
                               const Padding(padding: EdgeInsets.only(top: 5)),
-                              const Text('Декларация:',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
-                              Text(foodItems[i].declarate.trim(),style: const TextStyle(fontSize: 10)),
+                              //если значение декларации не пустое - добавить поле с декларацией
+                              if (foodItems[i].declarate.trim() != '') const Text('Декларация:',style: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),),
+                              if (foodItems[i].declarate.trim() != '') Text(foodItems[i].declarate.trim(),style: const TextStyle(fontSize: 10)),
                             ],
                           ),
                         ),

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_docs_test/loading_screen.dart';
 
 import 'food_controller.dart';
 import 'food_list.dart';
 import 'main.dart';
+
+String nameFoodList = 'Ветчины';
 
 class Category extends StatelessWidget {
   const Category({Key? key}) : super(key: key);
@@ -61,7 +64,8 @@ class _CategoryListState extends State<CategoryList> {
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Scrollbar(
-        child: ListView.builder(
+        child: category.isEmpty ? const LoadingScreen() :
+        ListView.builder(
           itemCount: category.length,
           itemBuilder: (context, i) {
             return TextButton(
@@ -71,6 +75,7 @@ class _CategoryListState extends State<CategoryList> {
                   overlayColor: MaterialStateProperty.all(Colors.green.withOpacity(0.7))
               ),
               onPressed: (){
+                nameFoodList = category[i];
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const FoodListScreen())
@@ -82,7 +87,14 @@ class _CategoryListState extends State<CategoryList> {
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    color: Colors.white,
+                    //color: Colors.white,
+                    gradient: const LinearGradient(
+                      colors: [
+                        Colors.white,
+                        Color(0xffeaffdb),
+                        //Colors.white,
+                      ]
+                    ),
                     boxShadow: [
                       BoxShadow(
                           color: Colors.black.withOpacity(0.2),
@@ -94,15 +106,25 @@ class _CategoryListState extends State<CategoryList> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        category[i],
-                        style: TextStyle(
-                            color: Colors.green[900],
-                            fontSize: 16
+                    Row(
+                      children: [
+                        Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: i>=imagesCategory.length
+                                ? Image.asset('lib/assets/meat_placeholder.png',height: 25)
+                                : Image.asset(imagesCategory[i],height: 25)
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Text(
+                            category[i],
+                            style: TextStyle(
+                                color: Colors.green[900],
+                                fontSize: 16
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                     Icon(Icons.arrow_right_outlined,color: Theme.of(context).primaryColor,)
                   ],
