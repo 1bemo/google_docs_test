@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_docs_test/loading_screen.dart';
+import 'package:google_docs_test/theme_data.dart';
 
 import 'food_controller.dart';
 import 'food_list.dart';
@@ -9,17 +10,12 @@ String nameFoodList = 'Ветчины';
 
 class Category extends StatelessWidget {
   const Category({Key? key}) : super(key: key);
+  //const Category({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        splashColor: Colors.green.withOpacity(0.7),
-        primaryColor: Colors.green[700],
-        highlightColor: Colors.green[900],
-        //цвет подсказки конца списка
-        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.green),
-      ),
+      theme: greenTheme,
       home: const CategoryList(),
     );
   }
@@ -27,6 +23,7 @@ class Category extends StatelessWidget {
 
 class CategoryList extends StatefulWidget {
   const CategoryList({Key? key}) : super(key: key);
+  //const CategoryList({Key key}) : super(key: key);
 
   @override
   State<CategoryList> createState() => _CategoryListState();
@@ -111,8 +108,8 @@ class _CategoryListState extends State<CategoryList> {
                         Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: i>=imagesCategory.length
-                                ? Image.asset('lib/assets/meat_placeholder.png',height: 25)
-                                : Image.asset(imagesCategory[i],height: 25)
+                                ? Image.asset('lib/assets/meat_placeholder.png',height: 25,color: Colors.green[900],)
+                                : Image.asset(imagesCategory[i],height: 25,color: Colors.green[900],)
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 20),

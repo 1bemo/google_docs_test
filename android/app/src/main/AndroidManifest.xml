@@ -1,6 +1,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dmcvk.google_docs_test">
+
+    <!-- разрешить доступ в интернет -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Разрешить открывать ссылки в браузере -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
+
    <application
         android:label="google_docs_test"
         android:name="${applicationName}"

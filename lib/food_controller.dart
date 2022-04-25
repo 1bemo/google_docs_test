@@ -32,6 +32,11 @@ List imagesCategory = <String>[
   'lib/assets/8.png',
   'lib/assets/9.png',
   'lib/assets/9.png',
+  'lib/assets/10.png',
+  'lib/assets/11.png',
+  'lib/assets/12.png',
+  'lib/assets/13.png',
+  'lib/assets/14.png',
 ];
 
 List _urlsCategory = <String>[

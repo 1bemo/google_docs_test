@@ -2,21 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_docs_test/category.dart';
 import 'package:google_docs_test/food_controller.dart';
 import 'package:google_docs_test/loading_screen.dart';
+import 'package:google_docs_test/theme_data.dart';
 
 // ignore: must_be_immutable
 class FoodListScreen extends StatelessWidget {
   const FoodListScreen({Key? key}) : super(key: key);
+  //const FoodListScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        splashColor: Colors.green.withOpacity(0.7),
-        primaryColor: Colors.green[700],
-        highlightColor: Colors.green[900],
-        //цвет подсказки конца списка
-        colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.green),
-      ),
+      theme: greenTheme,
       home: const FoodListPage(),
     );
   }
@@ -25,6 +21,7 @@ class FoodListScreen extends StatelessWidget {
 // ignore: must_be_immutable
 class FoodListPage extends StatefulWidget {
   const FoodListPage({Key? key}) : super(key: key);
+  //const FoodListPage({Key key}) : super(key: key);
 
   @override
   State<FoodListPage> createState() => _FoodListPageState();
@@ -42,15 +39,14 @@ class _FoodListPageState extends State<FoodListPage> {
     FoodController().getFoodList(nameFoodList).then((foodItemsFromSheet) {
       setState(() {
         foodItems = foodItemsFromSheet;
-        //foodItems = formatImageLink(foodItems);
       });
     });
   }
 
-  List formatImageLink (List fdItem) {
-    fdItem[23].image = fdItem[23].image.toString().replaceAll('=IMAGE("', '');
-    fdItem[23].image = fdItem[23].image.toString().replaceAll('")', '');
-    return fdItem;
+  String formatImageLink(String unformatImageLink) {
+    unformatImageLink = unformatImageLink.replaceAll('=IMAGE("', '');
+    unformatImageLink = unformatImageLink.replaceAll('")', '');
+    return unformatImageLink;
   }
 
   @override
@@ -119,8 +115,8 @@ class _FoodListPageState extends State<FoodListPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   foodItems[i].image == ''
-                                      ? Image.asset('lib/assets/no_image.png',width: 150,)
-                                      : Image.network(foodItems[i].image, width: 150,),
+                                    ? Image.asset('lib/assets/no_image.png',width: 150,)
+                                    : Image.network(formatImageLink(foodItems[i].image),width: 200,height: 200,)
                                 ],
                               ),
                               const Padding(padding: EdgeInsets.only(top: 10)),
